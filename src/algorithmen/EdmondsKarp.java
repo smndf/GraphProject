@@ -37,8 +37,15 @@ public class EdmondsKarp {
 		}
 
 		// while there exists a path p from s to t in the residual Network Gf
-		Graph residualGraph = graph;
-		int[][] residualGraphCapacity = residualGraph.getCapacity();
+		Graph residualGraph = new Graph();
+		int[][] residualGraphCapacity = new int[n][n];
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				residualGraphCapacity[i][j] = graph.getCapacity()[i][j];
+			}
+		}
+		residualGraph.setCapacity(residualGraphCapacity);
+		residualGraph.setKnotenPosition(graph.getKnotenPosition());
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < n; j++) {
 				residualGraphCapacity[i][j] = graph.getCapacity()[i][j] - flow[i][j];

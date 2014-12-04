@@ -34,7 +34,15 @@ public class FordFulkerson {
 			}	
 		}
 
-		Graph residualGraph = new Graph((ArrayList<Position>)graph.getKnotenPosition().clone(),graph.getCapacity().clone());
+		Graph residualGraph = new Graph();
+		int[][] residualGraphCapacity = new int[n][n];
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				residualGraphCapacity[i][j] = graph.getCapacity()[i][j];
+			}
+		}
+		residualGraph.setCapacity(residualGraphCapacity);
+		residualGraph.setKnotenPosition(graph.getKnotenPosition());
 
 		ArrayList<Integer> path = DFS(residualGraph.getCapacity(), start, target);
 		//while there exists a path p from s to t in the residual Network Gf
