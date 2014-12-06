@@ -3,15 +3,12 @@ package graph;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
-import java.util.Collections;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
-
-import algorithmen.FordFulkerson;
 
 public class DrawGraph  extends JPanel {
 
+	private static final long serialVersionUID = 1L;
 	private Graph graph;
 	private ArrayList<Integer> pathGraph;
 

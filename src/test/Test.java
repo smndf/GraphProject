@@ -2,12 +2,9 @@ package test;
 
 import java.util.ArrayList;
 
-import javax.swing.JFrame;
-
 import algorithmen.EdmondsKarp;
 import algorithmen.FordFulkerson;
 import zufallsgenerator.Zufallsgenerator;
-import graph.DrawGraph;
 import graph.Graph;
 import graph.Position;
 
@@ -68,7 +65,7 @@ public class Test {
 			//int[][] capacity = {{0 , 3 , 1 , 0 , 0 , 0},{7 , 0 , 2 , 4 , 1 , 0},{9 , 0 , 0 , 0 , 0 , 0},{0 , 0 , 0 , 0 , 6 , 4},{0 , 7 , 9 , 0 , 0 , 0},{0 , 0 , 0 , 6 , 10 , 0}};
 			
 			//Graph graph = new Graph(pos, capacity);
-			Graph graph = Zufallsgenerator.createZG(6, 20);
+			Graph graph = Zufallsgenerator.createZG(4, 10);
 			
 			
 /*			JFrame frame = new JFrame("Graph Visualiesierung graphe de base");
@@ -77,19 +74,14 @@ public class Test {
 			frame.setSize(1000,600);
 			frame.setVisible(true);*/
 			
-			System.out.println("Graph avant FF : ");
+			System.out.println("Graph : ");
 			graph.printGraph();
+			graph.drawGraph("Visualiesierung Graph");
 			
 			FordFulkerson ff = new FordFulkerson();
-			ff.fordFulkerson(graph, 0, 5);
-
-			System.out.println("Graph apres FF : ");
-			System.out.println("Graph avant EK : ");
-			graph.printGraph();
-			
+			ff.fordFulkerson(graph, 0, 3);
+						
 			EdmondsKarp ek = new EdmondsKarp(graph);
-			ek.edmondsKarp(0, 5);
-			System.out.println("Graph apres EK : ");
-			graph.printGraph();
+			ek.edmondsKarp(0, 3);
 		}
 }

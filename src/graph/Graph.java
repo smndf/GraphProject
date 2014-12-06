@@ -1,13 +1,10 @@
 package graph;
 
-import java.awt.Color;
-import java.awt.Graphics;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
-public class Graph extends JPanel {
+public class Graph {
 
 	private ArrayList<Position> knotenPosition;
 	private int[][] capacity;
@@ -39,47 +36,13 @@ public class Graph extends JPanel {
 		this.capacity = capacity;
 	}
 
-	public void drawGraph(){
-		JFrame frame = new JFrame("Graph Visualiesierung");
+	public void drawGraph(String name){
+		JFrame frame = new JFrame(name);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.getContentPane().add(new Graph(knotenPosition, capacity));
+		frame.getContentPane().add(new DrawGraph(this));
 		frame.setSize(1000,600);
 		frame.setVisible(true);
 	}
-	
-	public void paintComponent(Graphics g){
-		
-		ArrayList<Position> positions = this.getKnotenPosition();
-		int count = 0;
-		for (Position p : positions){
-			g.setColor(Color.red);
-			g.drawString(Integer.toString(count), p.getX()-5 ,p.getY()-5);
-			g.fillOval(p.getX()-4, p.getY()-4, 7, 7);
-			count++;
-		}
-		int[][] capacities = this.getCapacity();
-		int flow;
-		int n = capacities.length;
-		int x1;
-		int x2;
-		int y1;
-		int y2;
-		for (int i = 0; i < n ; i++){
-			for (int j = 0; j < n ; j++){
-				flow = capacities[i][j];
-				if (flow != 0){
-					x1 = positions.get(i).getX();
-					x2 = positions.get(j).getX();
-					y1 = positions.get(i).getY();
-					y2 = positions.get(j).getY();
-					g.setColor(Color.black);
-					g.drawLine(x1, y1 , x2, y2);
-					//System.out.println("flow[" + i + "][" + j + "] : " + flow);
-					g.drawString(Integer.toString(flow), Math.min(x1, x2)+Math.abs((x1-x2)/2), Math.min(y1, y2)+Math.abs((y1-y2)/2));
-				}
-			}	
-		}
-}
 	
 	public boolean intersectKanten(Position pos1, Position pos2) {
 		boolean result = false;
@@ -126,7 +89,7 @@ public class Graph extends JPanel {
 	
 	public void printGraph(){
 		for (int i=0; i < capacity.length; i++){
-			System.out.print("{");
+			System.out.print("{ ");
 			for (int j=0; j < capacity.length; j++){
 				System.out.print(capacity[i][j] + "  ");
 			}

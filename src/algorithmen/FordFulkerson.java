@@ -82,6 +82,7 @@ public class FordFulkerson {
 			path = DFS(residualGraph.getCapacity(), start, target);
 		}
 		System.out.println("flow Max Ford-Fulkerson : " + floxMax);
+		residualGraph.drawGraph("Graph Visualisierung Ford-Fulkerson");
 	}
 
 
@@ -146,14 +147,6 @@ public int getParent(int[][] graph, int node){
 		}			
 	}
 	return -1;
-}
-
-public void drawGraph(Graph residualGraph, ArrayList<Integer> path){
-	JFrame frame = new JFrame("Graph Visualiesierung " + i++);
-	frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-	frame.getContentPane().add(new DrawGraph(residualGraph, path));
-	frame.setSize(1000,600);
-	frame.setVisible(true);
 }
 
 }
