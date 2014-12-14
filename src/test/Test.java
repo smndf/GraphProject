@@ -2,6 +2,7 @@ package test;
 
 import java.util.ArrayList;
 
+import algorithmen.Dinic;
 import algorithmen.EdmondsKarp;
 import algorithmen.FordFulkerson;
 import zufallsgenerator.Zufallsgenerator;
@@ -64,8 +65,11 @@ public class Test {
 			
 			//int[][] capacity = {{0 , 3 , 1 , 0 , 0 , 0},{7 , 0 , 2 , 4 , 1 , 0},{9 , 0 , 0 , 0 , 0 , 0},{0 , 0 , 0 , 0 , 6 , 4},{0 , 7 , 9 , 0 , 0 , 0},{0 , 0 , 0 , 6 , 10 , 0}};
 			
-			//Graph graph = new Graph(pos, capacity);
-			Graph graph = Zufallsgenerator.createZG(4, 10);
+			// graphe exemple wikipedia : http://fr.wikipedia.org/wiki/Algorithme_de_Dinic
+			int[][] capacity = {{0 , 10 , 10 , 0 , 0 , 0},{0 , 0 , 2 , 4 , 8 , 0},{0 , 0 , 0 , 0 , 9 , 0},{0 , 0 , 0 , 0 , 0 , 10},{0 , 0 , 0 , 6 , 0 , 10},{0 , 0 , 0 , 0 , 0 , 0}};
+			
+			Graph graph = new Graph(pos, capacity);
+			//Graph graph = Zufallsgenerator.createZG(4, 10);
 			
 			
 /*			JFrame frame = new JFrame("Graph Visualiesierung graphe de base");
@@ -76,12 +80,15 @@ public class Test {
 			
 			System.out.println("Graph : ");
 			graph.printGraph();
-			graph.drawGraph("Visualiesierung Graph");
+			//graph.drawGraph("Visualiesierung Graph");
 			
-			FordFulkerson ff = new FordFulkerson();
-			ff.fordFulkerson(graph, 0, 3);
+			//FordFulkerson ff = new FordFulkerson();
+			//ff.fordFulkerson(graph, 0, 3);
 						
-			EdmondsKarp ek = new EdmondsKarp(graph);
-			ek.edmondsKarp(0, 3);
+			//EdmondsKarp ek = new EdmondsKarp(graph);
+			//ek.edmondsKarp(0, 3);
+			
+			Dinic di = new Dinic();
+			di.dinic(graph, 0, 5);
 		}
 }
