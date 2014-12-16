@@ -82,11 +82,11 @@ public class Test {
 			graph.printGraph();
 			//graph.drawGraph("Visualiesierung Graph");
 			
-			//FordFulkerson ff = new FordFulkerson();
-			//ff.fordFulkerson(graph, 0, 3);
+			FordFulkerson ff = new FordFulkerson();
+			ff.fordFulkerson(graph, 0, 5);
 						
-			//EdmondsKarp ek = new EdmondsKarp(graph);
-			//ek.edmondsKarp(0, 3);
+			EdmondsKarp ek = new EdmondsKarp(graph);
+			ek.edmondsKarp(0, 5);
 			
 			Dinic di = new Dinic();
 			di.dinic(graph, 0, 5);
