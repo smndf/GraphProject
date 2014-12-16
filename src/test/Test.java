@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import algorithmen.Dinic;
 import algorithmen.EdmondsKarp;
 import algorithmen.FordFulkerson;
+import algorithmen.GoldbergTarjan;
 import zufallsgenerator.Zufallsgenerator;
 import graph.Graph;
 import graph.Position;
@@ -66,7 +67,10 @@ public class Test {
 			//int[][] capacity = {{0 , 3 , 1 , 0 , 0 , 0},{7 , 0 , 2 , 4 , 1 , 0},{9 , 0 , 0 , 0 , 0 , 0},{0 , 0 , 0 , 0 , 6 , 4},{0 , 7 , 9 , 0 , 0 , 0},{0 , 0 , 0 , 6 , 10 , 0}};
 			
 			// graphe exemple wikipedia : http://fr.wikipedia.org/wiki/Algorithme_de_Dinic
-			int[][] capacity = {{0 , 10 , 10 , 0 , 0 , 0},{0 , 0 , 2 , 4 , 8 , 0},{0 , 0 , 0 , 0 , 9 , 0},{0 , 0 , 0 , 0 , 0 , 10},{0 , 0 , 0 , 6 , 0 , 10},{0 , 0 , 0 , 0 , 0 , 0}};
+			//int[][] capacity = {{0 , 10 , 10 , 0 , 0 , 0},{0 , 0 , 2 , 4 , 8 , 0},{0 , 0 , 0 , 0 , 9 , 0},{0 , 0 , 0 , 0 , 0 , 10},{0 , 0 , 0 , 6 , 0 , 10},{0 , 0 , 0 , 0 , 0 , 0}};
+			
+			int[][] capacity = {{0 , 5 , 3 , 0 , 0 , 0},{0 , 0 , 0 , 4 , 0 , 0},{0 , 0 , 0 , 0 , 4 , 0},{0 , 0 , 0 , 0 , 0 , 6},{0 , 0 , 0 , 0 , 0 , 3},{0 , 0 , 0 , 0 , 0 , 0}};
+
 			
 			Graph graph = new Graph(pos, capacity);
 			//Graph graph = Zufallsgenerator.createZG(4, 10);
@@ -82,13 +86,16 @@ public class Test {
 			graph.printGraph();
 			//graph.drawGraph("Visualiesierung Graph");
 			
-			FordFulkerson ff = new FordFulkerson();
-			ff.fordFulkerson(graph, 0, 5);
+			//FordFulkerson ff = new FordFulkerson();
+			//ff.fordFulkerson(graph, 0, 5);
 						
-			EdmondsKarp ek = new EdmondsKarp(graph);
-			ek.edmondsKarp(0, 5);
+			//EdmondsKarp ek = new EdmondsKarp(graph);
+			//ek.edmondsKarp(0, 5);
 			
-			Dinic di = new Dinic();
-			di.dinic(graph, 0, 5);
+			//Dinic di = new Dinic();
+			//di.dinic(graph, 0, 5);
+			
+			GoldbergTarjan gt = new GoldbergTarjan();
+			gt.goldbergTarjan(graph, 0, 5);
 		}
 }
