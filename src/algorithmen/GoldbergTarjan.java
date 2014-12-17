@@ -14,6 +14,7 @@ public class GoldbergTarjan {
 		System.out.println("Goldberg-Tarjan");
 		System.out.println("Initialisation :");
 		int n = graph.getKnotenPosition().size();
+		System.out.println("n = "+n);
 		int maxFlow = 0;
 
 		// Le préflot initial est comme étant nul sur tous les arcs sauf ceux sortant de la source, et f(s,v)=c(s,v) pour tout arc (s,v). 
@@ -40,7 +41,7 @@ public class GoldbergTarjan {
 
 		Graph gtGraph = new Graph();
 		int[][] gtGraphCapacity = new int[n][n];
-		for (int i = 0; i < n; i++) {
+		for (int i = 0; i < n-1; i++) {
 			for (int j = 0; j < n; j++) {
 				gtGraphCapacity[i][j] = graph.getCapacity()[i][j];
 			}
@@ -62,7 +63,7 @@ public class GoldbergTarjan {
 			relabel(gtGraph, flow, u, heights);
 			printHeights(heights);
 		}
-		
+
 		for (int i = 0; i < n; i++) {
 			maxFlow += flow[i][target];
 		}
@@ -86,7 +87,7 @@ public class GoldbergTarjan {
 
 	public void relabel(Graph graph, int[][] flow, int u, int[] heights){
 		int minHeight = Integer.MAX_VALUE;
-		for (int v : getAdjacent(graph.getCapacity(), u)){ 
+		for (int v : getAdjacent(getResidualCapacity(graph,flow), u)){ 
 			if (residualCapacity(graph, flow, u, v)>0){
 				if (heights[v]<minHeight) minHeight = heights[v];
 			}
@@ -96,6 +97,17 @@ public class GoldbergTarjan {
 		} else {
 			heights[u] = minHeight + 1;			
 		}
+	}
+	
+	public int[][] getResidualCapacity(Graph graph, int[][] flow){
+		int n = graph.getCapacity().length;
+		int[][] residualCapacity = new int [n][n];
+		for (int i=0; i<n; i++){
+			for (int j=0; j<n; j++){
+				residualCapacity[i][j] = graph.getCapacity()[i][j] - flow[i][j];
+			}	
+		}
+		return residualCapacity;
 	}
 
 	public int residualCapacity(Graph graph, int[][] flow, int u, int v){
