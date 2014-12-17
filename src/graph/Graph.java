@@ -87,6 +87,41 @@ public class Graph {
 		return result;
 	}
 	
+	public ArrayList<Integer> getAdjacent(int node){
+		ArrayList<Integer> result = new ArrayList<Integer>();
+		for (int i = 0; i < this.getCapacity().length; i++){
+			if (this.getCapacity()[node][i] > 0){
+				result.add(i);
+			}			
+		}
+		return result;
+	}
+	
+	public ArrayList<Integer> getAdjacent(int[][] flow, int node){
+		ArrayList<Integer> result = new ArrayList<Integer>();
+		for (int i = 0; i < this.getResidualCapacity(flow).length; i++){
+			if (this.getResidualCapacity(flow)[node][i] > 0){
+				result.add(i);
+			}			
+		}
+		return result;
+	}
+
+	public int residualCapacity(int[][] flow, int u, int v){
+		return this.getCapacity()[u][v] - flow [u][v];
+	}
+	
+	public int[][] getResidualCapacity(int[][] flow){
+		int n = this.getCapacity().length;
+		int[][] residualCapacity = new int [n][n];
+		for (int i=0; i<n; i++){
+			for (int j=0; j<n; j++){
+				residualCapacity[i][j] = this.getCapacity()[i][j] - flow[i][j];
+			}	
+		}
+		return residualCapacity;
+	}
+	
 	public void printGraph(){
 		for (int i=0; i < capacity.length; i++){
 			System.out.print("{ ");

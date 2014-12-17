@@ -24,7 +24,7 @@ public class GoldbergTarjan {
 				flow[i][j] = 0;
 			}	
 		}
-		for (int v : getAdjacent(graph.getCapacity(), start)){
+		for (int v : graph.getAdjacent(start)){
 			flow[start][v] = graph.getCapacity()[start][v];
 			flow[v][start] = -flow[start][v];
 		}
@@ -55,7 +55,7 @@ public class GoldbergTarjan {
 		while ((u = activeVertice(gtGraph, flow)) != -1){
 			System.out.println("Nouveau sommet actif : "+u);
 			for (int v = 0; v < n; v++) {
-				if (residualCapacity(gtGraph, flow, u, v) > 0 && heights[u] > heights[v]){
+				if (gtGraph.residualCapacity(flow, u, v) > 0 && heights[u] > heights[v]){
 					push(gtGraph, flow, u, v, flowExcesses);
 					break; //??
 				}
@@ -75,7 +75,7 @@ public class GoldbergTarjan {
 
 	public void push(Graph graph, int[][] flow, int u, int v, int[] flowExcesses){
 		int m;
-		if (flowExcesses[u] > residualCapacity(graph, flow, u, v)) m = residualCapacity(graph, flow, u, v);
+		if (flowExcesses[u] > graph.residualCapacity(flow, u, v)) m = graph.residualCapacity(flow, u, v);
 		else m = flowExcesses[u];
 		System.out.println("push de " + u + " à " + v +" de " + m);
 		flowExcesses[u] -= m;
@@ -87,8 +87,8 @@ public class GoldbergTarjan {
 
 	public void relabel(Graph graph, int[][] flow, int u, int[] heights){
 		int minHeight = Integer.MAX_VALUE;
-		for (int v : getAdjacent(getResidualCapacity(graph,flow), u)){ 
-			if (residualCapacity(graph, flow, u, v)>0){
+		for (int v : graph.getAdjacent(flow, u)){ 
+			if (graph.residualCapacity(flow, u, v)>0){
 				if (heights[v]<minHeight) minHeight = heights[v];
 			}
 		}
@@ -97,21 +97,6 @@ public class GoldbergTarjan {
 		} else {
 			heights[u] = minHeight + 1;			
 		}
-	}
-	
-	public int[][] getResidualCapacity(Graph graph, int[][] flow){
-		int n = graph.getCapacity().length;
-		int[][] residualCapacity = new int [n][n];
-		for (int i=0; i<n; i++){
-			for (int j=0; j<n; j++){
-				residualCapacity[i][j] = graph.getCapacity()[i][j] - flow[i][j];
-			}	
-		}
-		return residualCapacity;
-	}
-
-	public int residualCapacity(Graph graph, int[][] flow, int u, int v){
-		return graph.getCapacity()[u][v] - flow [u][v];
 	}
 
 	public int flowExcess(Graph graph, int[][] flow, int u){
@@ -129,16 +114,6 @@ public class GoldbergTarjan {
 			if (flowExcess(graph, flow, i) > 0) return i;
 		}
 		return -1;
-	}
-
-	public ArrayList<Integer> getAdjacent(int[][] graphCapacity, int node){
-		ArrayList<Integer> result = new ArrayList<Integer>();
-		for (int i = 0; i < graphCapacity.length; i++){
-			if (graphCapacity[node][i] > 0){
-				result.add(i);
-			}			
-		}
-		return result;
 	}
 	
 	public void printFlow(int[][] flow){

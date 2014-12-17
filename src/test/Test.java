@@ -72,12 +72,12 @@ public class Test {
 			//int[][] capacity = {{0 , 5 , 3 , 0 , 0 , 0},{0 , 0 , 0 , 4 , 0 , 0},{0 , 0 , 0 , 0 , 4 , 0},{0 , 0 , 0 , 0 , 0 , 6},{0 , 0 , 0 , 0 , 0 , 3},{0 , 0 , 0 , 0 , 0 , 0}};
 
 			// graphe exemple wikipedia : http://en.wikipedia.org/wiki/Push–relabel_maximum_flow_algorithm
-			int[][] capacity = {{0 , 15 , 0 , 4 , 0 , 0},{0 , 0 , 12 , 0 , 0 , 0},{0 , 0 , 0 , 3 , 0 , 7},{0 , 0 , 0 , 0 , 10, 0},{0 , 5 , 0 , 0 , 0 , 10},{0 , 0 , 0 , 0 , 0 , 0}};
+			//int[][] capacity = {{0 , 15 , 0 , 4 , 0 , 0},{0 , 0 , 12 , 0 , 0 , 0},{0 , 0 , 0 , 3 , 0 , 7},{0 , 0 , 0 , 0 , 10, 0},{0 , 5 , 0 , 0 , 0 , 10},{0 , 0 , 0 , 0 , 0 , 0}};
 
 			
-			Graph graph = new Graph(pos, capacity);
+			//Graph graph = new Graph(pos, capacity);
 			
-			//Graph graph = Zufallsgenerator.createZG(4, 10);
+			Graph graph = Zufallsgenerator.createZG(6, 10);
 			
 			
 /*			JFrame frame = new JFrame("Graph Visualiesierung graphe de base");
