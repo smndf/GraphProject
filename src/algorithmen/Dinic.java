@@ -96,11 +96,6 @@ public class Dinic {
 	private Graph getAcyclicSubgraph(Graph graph, int start, int target) {
 		int n = graph.getKnotenPosition().size();
 		int[][] acyclicGraphCapacity = new int[n][n];
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < n; j++) {
-				acyclicGraphCapacity[i][j] = 0;
-			}
-		}
 
 		Graph acyclicGraph = new Graph();
 		for (int i = 0; i < n; i++) {
@@ -128,7 +123,7 @@ public class Dinic {
 		while (!queue.isEmpty()){
 			System.out.println("file : " + queue.toString());
 			u = queue.poll();
-			for (int v : getAdjacent(graph.getCapacity(), u)){ 
+			for (int v : graph.getAdjacent(u)){ 
 				if (d[v] >= d[u] + 1){
 					d[v] = d[u] + 1;
 					path[v] = u;
@@ -155,7 +150,7 @@ public class Dinic {
 					queue.add(v);
 				} else {
 					// on enleve l'arc
-					acyclicGraphCapacity[u][v] = 0;
+					acyclicGraph.getCapacity()[u][v] = 0;
 					System.out.println("arc "+u+","+v+" enlevé");
 				}
 			}
@@ -166,9 +161,9 @@ public class Dinic {
 
 	}
 
-	public int[] BFS(int[][] graph, int start, int target) {
+	public int[] BFS(int[][] graphCapacity, int start, int target) {
 
-		int n = graph.length;
+		int n = graphCapacity.length;
 		int[] isSeen = new int[n];
 		int[] d = new int[n];
 		int[] path = new int[n];
@@ -187,7 +182,7 @@ public class Dinic {
 
 		while (!queue.isEmpty()){
 			u = queue.poll();
-			for (int v : getAdjacent(graph, u)){ 
+			for (int v : getAdjacent(graphCapacity, u)){ 
 				if (isSeen[v]==0){
 					isSeen[v] = 1;
 					d[v] = d[u] + 1;
@@ -216,7 +211,7 @@ public class Dinic {
 		}
 	}
 
-	public ArrayList<Integer> BlockingFlow(int[][] graph, int start, int target) {
+	/*public ArrayList<Integer> BlockingFlow(int[][] graph, int start, int target) {
 		int n = graph.length;
 		Stack<Integer> stack = new Stack<Integer>();
 		int[] isSeen = new int[n];
@@ -262,20 +257,6 @@ public class Dinic {
 		return null;
 	}
 
-	private int getCapacityPath(Graph graph, int[] path, int target, int start) {
-		int capacityPath = 0;
-		int minCapa = Integer.MAX_VALUE;
-		int current = target;
-		while (current != start){
-			capacityPath = graph.getCapacity()[path[current]][current];
-			current = path[current];
-			if (capacityPath < minCapa){
-				minCapa = capacityPath;
-			}
-		}
-		return minCapa;
-	}
-
 	private int[][] removeIncident(int[][] graph, int current) {
 		int n = graph.length;
 		int[][] newGraph = new int[n-1][n-1];
@@ -286,12 +267,12 @@ public class Dinic {
 			}
 		}
 		return newGraph;
-	}
+	}*/
 
-	public ArrayList<Integer> getAdjacent(int[][] graph, int node){
+	public ArrayList<Integer> getAdjacent(int[][] graphCapacity, int node){
 		ArrayList<Integer> result = new ArrayList<Integer>();
-		for (int i = 0; i < graph.length; i++){
-			if (graph[node][i] > 0){
+		for (int i = 0; i < graphCapacity.length; i++){
+			if (graphCapacity[node][i] > 0){
 				result.add(i);
 			}			
 		}

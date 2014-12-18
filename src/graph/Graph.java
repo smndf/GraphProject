@@ -1,6 +1,7 @@
 package graph;
 
 import java.util.ArrayList;
+import java.util.Stack;
 
 import javax.swing.JFrame;
 
@@ -8,11 +9,11 @@ public class Graph {
 
 	private ArrayList<Position> knotenPosition;
 	private int[][] capacity;
-	
+
 	public Graph(){
 		knotenPosition = new ArrayList<Position>();
 	}
-	
+
 	public Graph(ArrayList<Position> pos, int[][] c){
 		knotenPosition = pos;
 		capacity = c;
@@ -22,7 +23,7 @@ public class Graph {
 		knotenPosition = g.getKnotenPosition();
 		capacity = c;
 	}
-	
+
 	public ArrayList<Position> getKnotenPosition() {
 		return knotenPosition;
 	}
@@ -43,7 +44,7 @@ public class Graph {
 		frame.setSize(1000,600);
 		frame.setVisible(true);
 	}
-	
+
 	public boolean intersectKanten(Position pos1, Position pos2) {
 		boolean result = false;
 		Position posi, posj;
@@ -52,7 +53,7 @@ public class Graph {
 		int x2 = pos2.getX();
 		int y1 = pos1.getY();
 		int y2 = pos2.getY();
-		
+
 		int n = capacity.length;
 		for (int i = 0; i < n; i++){
 			for (int j = 0; j< n ; j++){
@@ -86,7 +87,7 @@ public class Graph {
 		}
 		return result;
 	}
-	
+
 	public ArrayList<Integer> getAdjacent(int node){
 		ArrayList<Integer> result = new ArrayList<Integer>();
 		for (int i = 0; i < this.getCapacity().length; i++){
@@ -96,7 +97,7 @@ public class Graph {
 		}
 		return result;
 	}
-	
+
 	public ArrayList<Integer> getAdjacent(int[][] flow, int node){
 		ArrayList<Integer> result = new ArrayList<Integer>();
 		for (int i = 0; i < this.getResidualCapacity(flow).length; i++){
@@ -110,7 +111,7 @@ public class Graph {
 	public int residualCapacity(int[][] flow, int u, int v){
 		return this.getCapacity()[u][v] - flow [u][v];
 	}
-	
+
 	public int[][] getResidualCapacity(int[][] flow){
 		int n = this.getCapacity().length;
 		int[][] residualCapacity = new int [n][n];
@@ -121,6 +122,79 @@ public class Graph {
 		}
 		return residualCapacity;
 	}
+
+	public int getCapacityPath(int[] path, int target, int start) {
+		int capacityPath = 0;
+		int minCapa = Integer.MAX_VALUE;
+		int current = target;
+		while (current != start){
+			capacityPath = this.getCapacity()[path[current]][current];
+			current = path[current];
+			if (capacityPath < minCapa){
+				minCapa = capacityPath;
+			}
+		}
+		return minCapa;
+	}
+
+	public int getCapacityPath(ArrayList<Integer> path, int target, int start) {
+
+		int minCapacityPath = Integer.MAX_VALUE;
+		int capacity = 0;
+
+		for (int i = 0; i < path.size() - 1; i++){
+			capacity = this.getCapacity()[path.get(i)][path.get(i+1)];
+			if (capacity < minCapacityPath){
+				minCapacityPath = capacity;
+			}
+		}
+		return minCapacityPath;
+	}
+
+	public ArrayList<Integer> DFS(int start, int target) {
+
+		int n = this.getCapacity().length;
+		Stack<Integer> stack = new Stack<Integer>();
+		int[] isSeen = new int[n];
+		int[] nbAdj = new int[n];
+		int current = start;
+
+		stack.push(start);
+
+		for (int i=0; i<n; i++){
+			isSeen[i] = 0;
+			nbAdj[i] = 0;
+		}
+
+		isSeen[start]=1;
+
+		if (start != target){
+
+			while (!stack.isEmpty()){
+				current = stack.peek();
+
+				ArrayList<Integer> adjacents = this.getAdjacent(current); 
+				int i = nbAdj[current];
+				int nextAdj;
+				if (i==adjacents.size() ){
+					isSeen[current]=2;
+					stack.pop();
+				} else {
+					nextAdj = adjacents.get(i);
+					if (isSeen[nextAdj]==0){
+						isSeen[nextAdj] = 1;
+						stack.push(nextAdj);
+						if (nextAdj==target){
+							return  new ArrayList<Integer>(stack);
+						}
+					}
+					nbAdj[current] ++;
+				}
+			}
+		}
+		return null;
+	}	
+
 	
 	public void printGraph(){
 		for (int i=0; i < capacity.length; i++){

@@ -82,31 +82,7 @@ public class EdmondsKarp {
 			}
 			pathList.add(path);
 			//drawGraph(residualGraph, path);
-	/*		for (int i = 0; i < n; i++) {
-				for (int j = 0; j < n; j++) {
-					 ici je pense que c'est plutôt :
-					 * residualGraphCapacity[i][j] = graphCapacity[i][j] - flow[i][j];
-					 * avec plus haut :
-					 * int[][] graphCapacity = residualGraph.getCapacity();
-						for (int i = 0; i < n; i++) {
-							for (int j = 0; j < n; j++) {
-								graphCapacity[i][j] = graph.getCapacity()[i][j];
-							}
-						}
-						parce que sinon si j'ai bien compris ce que t'as écrit la on enleve 
-						le nouveau flow mais aussi celui d'avant
-						
-						ou alors plus simple :
-						flow[u][v] = capacityPath;
-						flow[v][u] = _capacityPath;
-						
-						et pareil pour FordFulkerson du coup
- 					 
-					residualGraphCapacity[i][j] = residualGraphCapacity[i][j] - flow[i][j];
-					residualGraphCapacity[j][i] += flow[i][j];
-				}
-			}
-	*/		//System.out.println("Graph :");
+
 			pos = new ArrayList<Position>();
 			g = new Graph(pos, residualGraphCapacity);
 			//g.printGraph();
@@ -131,9 +107,9 @@ public class EdmondsKarp {
 				return minCapa;
 	}
 
-	public int[] BFS(int[][] graph, int start, int target) {
+	public int[] BFS(int[][] graphCapacity, int start, int target) {
 		
-		int n = graph.length;
+		int n = graphCapacity.length;
 		int[] isSeen = new int[n];
 		int[] d = new int[n];
 		int[] path = new int[n];
@@ -152,7 +128,7 @@ public class EdmondsKarp {
 
 		while (!queue.isEmpty()){
 			u = queue.poll();
-			for (int v : getAdjacent(graph, u)){ 
+			for (int v : getAdjacent(graphCapacity, u)){ 
 				if (isSeen[v]==0){
 					isSeen[v] = 1;
 					d[v] = d[u] + 1;
@@ -167,14 +143,6 @@ public class EdmondsKarp {
 			isSeen[u] = 2;
 		}
 		
-/*		System.out.println("path : ");
-		for (int i = 0; i < n; i++){
-			System.out.println(path[i]);
-		}
-		System.out.println(" isSeen : ");
-		for (int i = 0; i < n; i++){
-			System.out.println(isSeen[i]);
-		}*/
 		if (exist){
 			//System.out.print("path : " + target + " , ");
 			u = target;
@@ -188,10 +156,10 @@ public class EdmondsKarp {
 		}
 	}
 
-	public ArrayList<Integer> getAdjacent(int[][] graph, int node){
+	public ArrayList<Integer> getAdjacent(int[][] graphCapacity, int node){
 		ArrayList<Integer> result = new ArrayList<Integer>();
-		for (int i = 0; i < graph.length; i++){
-			if (graph[node][i] > 0){
+		for (int i = 0; i < graphCapacity.length; i++){
+			if (graphCapacity[node][i] > 0){
 				result.add(i);
 			}			
 		}

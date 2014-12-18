@@ -27,7 +27,7 @@ public class FordFulkerson {
 
 		int n = graph.getKnotenPosition().size();
 		int[][] flow = new int[n][n];
-		int floxMax = 0;
+		int flowMax = 0;
 		for (int i=0; i<n; i++){
 			for (int j=0; j<n; j++){
 				flow[i][j] = 0;
@@ -44,7 +44,7 @@ public class FordFulkerson {
 		residualGraph.setCapacity(residualGraphCapacity);
 		residualGraph.setKnotenPosition(graph.getKnotenPosition());
 
-		ArrayList<Integer> path = DFS(residualGraph.getCapacity(), start, target);
+		ArrayList<Integer> path = residualGraph.DFS(start, target);
 		//while there exists a path p from s to t in the residual Network Gf
 		while(path != null && !pathList.contains(path)){
 			for (int i = 0; i < n; i++){
@@ -53,17 +53,9 @@ public class FordFulkerson {
 				}	
 			}
 
-			int minCapacityPath = Integer.MAX_VALUE;
-			int capacity = 0;
+			int minCapacityPath = residualGraph.getCapacityPath(path, target, start);//Integer.MAX_VALUE;
 
-			for (int i = 0; i < path.size() - 1; i++){
-				capacity = residualGraph.getCapacity()[path.get(i)][path.get(i+1)];
-				if (capacity < minCapacityPath){
-					minCapacityPath = capacity;
-				}
-			}
-
-			floxMax += minCapacityPath;
+			flowMax += minCapacityPath;
 
 			// for each edge (u,v) in p 
 			for (int i = 0; i < path.size() - 1; i++){
@@ -79,74 +71,10 @@ public class FordFulkerson {
 
 			pathList.add(path);
 
-			path = DFS(residualGraph.getCapacity(), start, target);
+			path = residualGraph.DFS(start, target);
 		}
-		System.out.println("flow Max Ford-Fulkerson : " + floxMax);
+		System.out.println("flow Max Ford-Fulkerson : " + flowMax);
 		residualGraph.drawGraph("Graph Visualisierung Ford-Fulkerson");
 	}
-
-
-	public ArrayList<Integer> DFS(int[][] graph, int start, int target) {
-		
-		int n = graph.length;
-		Stack<Integer> stack = new Stack<Integer>();
-		int[] isSeen = new int[n];
-		int[] nbAdj = new int[n];
-		int current = start;
-
-		stack.push(start);
-
-		for (int i=0; i<n; i++){
-			isSeen[i] = 0;
-			nbAdj[i] = 0;
-		}
-		
-		isSeen[start]=1;
-		
-		if (start != target){
-
-			while (!stack.isEmpty()){
-				current = stack.peek();
-
-				ArrayList<Integer> adjacents = getAdjacent(graph, current); 
-				int i = nbAdj[current];
-				int nextAdj;
-				if (i==adjacents.size() ){
-					isSeen[current]=2;
-					stack.pop();
-				} else {
-					nextAdj = adjacents.get(i);
-					if (isSeen[nextAdj]==0){
-						isSeen[nextAdj] = 1;
-						stack.push(nextAdj);
-						if (nextAdj==target){
-							return  new ArrayList<Integer>(stack);
-						}
-					}
-					nbAdj[current] ++;
-				}
-			}
-		}
-	return null;
-}	
-
-public ArrayList<Integer> getAdjacent(int[][] graph, int node){
-	ArrayList<Integer> result = new ArrayList<Integer>();
-	for (int i = 0; i < graph.length; i++){
-		if (graph[node][i] > 0){
-			result.add(i);
-		}			
-	}
-	return result;
-}
-
-public int getParent(int[][] graph, int node){
-	for (int i = graph.length - 1; i >= 0; i--){
-		if (graph[i][node] > 0){
-			return i;
-		}			
-	}
-	return -1;
-}
 
 }
