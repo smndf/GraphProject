@@ -10,7 +10,7 @@ public class GoldbergTarjan {
 	public GoldbergTarjan(){
 	}
 
-	public void goldbergTarjan(Graph graph, int start, int target){
+	public int goldbergTarjan(Graph graph, int start, int target){
 		System.out.println("Goldberg-Tarjan");
 		System.out.println("Initialisation :");
 		int n = graph.getKnotenPosition().size();
@@ -69,6 +69,7 @@ public class GoldbergTarjan {
 		}
 
 		System.out.println("Fin Goldberg-Tarjan : flot total = "+maxFlow);
+		return maxFlow;
 
 
 	}

@@ -26,7 +26,7 @@ public class EdmondsKarp {
 		pathList = list;
 	}
 
-	public void edmondsKarp(int start, int target) {
+	public int edmondsKarp(int start, int target) {
 		int n = graph.getKnotenPosition().size();
 		int[][] flow = new int[n][n];
 		int floxMax = 0;
@@ -91,6 +91,7 @@ public class EdmondsKarp {
 		}
 		System.out.println("flow Max Edmonds-Karp: " + floxMax);
 		residualGraph.drawGraph("Graph Visualisierung Edmonds-Karp");
+		return floxMax;
 	}
 
 	private int getCapacityPath(int[][] residualGraphCapacity, int[] path, int target, int start) {
