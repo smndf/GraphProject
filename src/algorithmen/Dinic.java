@@ -18,7 +18,7 @@ public class Dinic {
 		pathList = list;
 	}
 
-	public void dinic(Graph graph, int start, int target){
+	public int dinic(Graph graph, int start, int target){
 		int n = graph.getKnotenPosition().size();
 		int[][] flow = new int[n][n];
 		int totalFlow = 0;
@@ -90,6 +90,7 @@ public class Dinic {
 
 		}
 		System.out.println("flux total :" + totalFlow);
+		return totalFlow;
 	}
 
 	// graphe de niveau (= graphe de départ sans les arcs qui créent des chemins plus longs que ceux existant)

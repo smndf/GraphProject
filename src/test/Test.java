@@ -46,13 +46,13 @@ public class Test {
 	}
 */
 		public static void main(String[] args){
-			ArrayList<Position> pos = new ArrayList<Position>();
+			/*ArrayList<Position> pos = new ArrayList<Position>();
 			pos.add(new Position(50,150));
 			pos.add(new Position(150,50));
 			pos.add(new Position(250,250));
 			pos.add(new Position(350,50));
 			pos.add(new Position(450,250));
-			pos.add(new Position(650,150));
+			pos.add(new Position(650,150));*/
 			
 			// flow max ff = 12
 			//int[][] capacity = {{0,9,9,0,0,0},{0,0,10,8,0,0},{0,0,0,1,3,0},{0,0,0,0,0,10},{0,0,0,8,0,7},{0,0,0,0,0,0}};
@@ -75,10 +75,7 @@ public class Test {
 			//int[][] capacity = {{0 , 15 , 0 , 4 , 0 , 0},{0 , 0 , 12 , 0 , 0 , 0},{0 , 0 , 0 , 3 , 0 , 7},{0 , 0 , 0 , 0 , 10, 0},{0 , 5 , 0 , 0 , 0 , 10},{0 , 0 , 0 , 0 , 0 , 0}};
 
 			
-			//Graph graph = new Graph(pos, capacity);
-			
-			Graph graph = Zufallsgenerator.createZG(6, 10);
-			
+			//Graph graph = new Graph(pos, capacity);	
 			
 /*			JFrame frame = new JFrame("Graph Visualiesierung graphe de base");
 			frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -86,20 +83,37 @@ public class Test {
 			frame.setSize(1000,600);
 			frame.setVisible(true);*/
 			
-			System.out.println("Graph : ");
-			graph.printGraph();
-			graph.drawGraph("Visualiesierung Graph");
+			int instanzen = 10;
+			int knotenzahl = 6;
+			int maxKapazitat = 10;
+			int start = 0;
+			int target = 5;
+			int error = 0;
 			
-			FordFulkerson ff = new FordFulkerson();
-			ff.fordFulkerson(graph, 0, 5);
-						
-			EdmondsKarp ek = new EdmondsKarp(graph);
-			ek.edmondsKarp(0, 5);
+			for (int i=1; i<=instanzen; i++){
+				Graph graph = Zufallsgenerator.createZG(knotenzahl, maxKapazitat);
 			
-			Dinic di = new Dinic();
-			di.dinic(graph, 0, 5);
+				//System.out.println("Graph : ");
+				//graph.printGraph();
+				//graph.drawGraph("Visualiesierung Graph");
+				
+				FordFulkerson ff = new FordFulkerson();
+				int flowFF = ff.fordFulkerson(graph, start, target);
+							
+				EdmondsKarp ek = new EdmondsKarp(graph);
+				int flowEK = ek.edmondsKarp(start, target);
+				
+				Dinic di = new Dinic();
+				int flowDI = di.dinic(graph, start, target);
+				
+				GoldbergTarjan gt = new GoldbergTarjan();
+				int flowGT = gt.goldbergTarjan(graph, start, target);
+				
+				if (flowFF != flowEK || flowEK != flowDI || flowDI != flowGT){
+					error ++;
+				}
+			}
 			
-			GoldbergTarjan gt = new GoldbergTarjan();
-			gt.goldbergTarjan(graph, 0, 5);
+			System.out.println(error + " error(s) on the " + instanzen + " instances");
 		}
 }

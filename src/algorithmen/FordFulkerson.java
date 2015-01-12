@@ -23,7 +23,7 @@ public class FordFulkerson {
 		pathList = list;
 	}
 
-	public void fordFulkerson(Graph graph, int start, int target){
+	public int fordFulkerson(Graph graph, int start, int target){
 
 		int n = graph.getKnotenPosition().size();
 		int[][] flow = new int[n][n];
@@ -74,7 +74,8 @@ public class FordFulkerson {
 			path = residualGraph.DFS(start, target);
 		}
 		System.out.println("flow Max Ford-Fulkerson : " + flowMax);
-		//residualGraph.drawGraph("Graph Visualisierung Ford-Fulkerson");
+		residualGraph.drawGraph("Graph Visualisierung Ford-Fulkerson");
+		return flowMax;
 	}
 
 }
