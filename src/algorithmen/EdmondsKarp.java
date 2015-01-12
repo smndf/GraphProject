@@ -90,7 +90,7 @@ public class EdmondsKarp {
 			path = BFS(residualGraphCapacity, start, target);
 		}
 		System.out.println("flow Max Edmonds-Karp: " + floxMax);
-		residualGraph.drawGraph("Graph Visualisierung Edmonds-Karp");
+		//residualGraph.drawGraph("Graph Visualisierung Edmonds-Karp");
 	}
 
 	private int getCapacityPath(int[][] residualGraphCapacity, int[] path, int target, int start) {

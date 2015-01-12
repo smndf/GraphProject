@@ -74,7 +74,7 @@ public class FordFulkerson {
 			path = residualGraph.DFS(start, target);
 		}
 		System.out.println("flow Max Ford-Fulkerson : " + flowMax);
-		residualGraph.drawGraph("Graph Visualisierung Ford-Fulkerson");
+		//residualGraph.drawGraph("Graph Visualisierung Ford-Fulkerson");
 	}
 
 }

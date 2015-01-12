@@ -44,12 +44,12 @@ public class Dinic {
 		// graphe de niveau
 		Graph acyclicSubgraph;
 
-		while (BFS((acyclicSubgraph = getAcyclicSubgraph(residualGraph, start, target)).getCapacity(),start,target) != null){
+		while (BFS((acyclicSubgraph = getAcyclicSubgraph(residualGraph, start, target)),start,target) != null){
 			System.out.println("nouveau acyclic graph :");
 			acyclicSubgraph.printGraph();
 
 			int[] path;
-			while ((path = BFS(acyclicSubgraph.getCapacity(),start,target)) != null){
+			while ((path = BFS(acyclicSubgraph,start,target)) != null){
 				acyclicSubgraph.printGraph();
 
 				// on calcule la longueur du path
@@ -157,13 +157,13 @@ public class Dinic {
 		}
 		System.out.println("fin getAcyclicSubgraph");
 		return acyclicGraph;
-
-
 	}
+	
+	public int[] BFS(Graph graph, int start, int target) {
 
-	public int[] BFS(int[][] graphCapacity, int start, int target) {
-
-		int n = graphCapacity.length;
+		int n = graph.getCapacity().length;
+		int[][] graphCapacity = new int[n][n];
+		graphCapacity = graph.getCapacity();
 		int[] isSeen = new int[n];
 		int[] d = new int[n];
 		int[] path = new int[n];
@@ -211,63 +211,6 @@ public class Dinic {
 		}
 	}
 
-	/*public ArrayList<Integer> BlockingFlow(int[][] graph, int start, int target) {
-		int n = graph.length;
-		Stack<Integer> stack = new Stack<Integer>();
-		int[] isSeen = new int[n];
-		int[] nbAdj = new int[n];
-		int current = start;
-		int[][] newGraph;
-
-		stack.push(start);
-
-		for (int i=0; i<n; i++){
-			isSeen[i] = 0;
-			nbAdj[i] = 0;
-		}
-
-		isSeen[start]=1;
-
-		if (start != target){
-
-			while (!stack.isEmpty()){
-				current = stack.peek();
-
-				ArrayList<Integer> adjacents = getAdjacent(graph, current); 
-				int i = nbAdj[current];
-				int nextAdj;
-				if (i==adjacents.size() ){
-					isSeen[current]=2;
-					newGraph = removeIncident(graph, current);
-					graph = newGraph;
-					stack.pop();
-				} else {
-					nextAdj = adjacents.get(i);
-					if (isSeen[nextAdj]==0){
-						isSeen[nextAdj] = 1;
-						stack.push(nextAdj);
-						if (nextAdj==target){
-							return  new ArrayList<Integer>(stack);
-						}
-					}
-					nbAdj[current] ++;
-				}
-			}
-		}
-		return null;
-	}
-
-	private int[][] removeIncident(int[][] graph, int current) {
-		int n = graph.length;
-		int[][] newGraph = new int[n-1][n-1];
-		for (int i = 0; i < graph.length; i++){
-			for (int j = 0; j < graph.length; j++){
-				if (i==current || j==current)
-					newGraph[i][j] = 0;				
-			}
-		}
-		return newGraph;
-	}*/
 
 	public ArrayList<Integer> getAdjacent(int[][] graphCapacity, int node){
 		ArrayList<Integer> result = new ArrayList<Integer>();
