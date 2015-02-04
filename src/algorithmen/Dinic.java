@@ -45,12 +45,12 @@ public class Dinic {
 		Graph acyclicSubgraph;
 
 		while (BFS((acyclicSubgraph = getAcyclicSubgraph(residualGraph, start, target)),start,target) != null){
-			System.out.println("nouveau acyclic graph :");
-			acyclicSubgraph.printGraph();
+			//System.out.println("nouveau acyclic graph :");
+			//acyclicSubgraph.printGraph();
 
 			int[] path;
 			while ((path = BFS(acyclicSubgraph,start,target)) != null){
-				acyclicSubgraph.printGraph();
+				//acyclicSubgraph.printGraph();
 
 				// on calcule la longueur du path
 				int u = target;
@@ -65,17 +65,17 @@ public class Dinic {
 				int capacity = 0;
 				u = target;
 				for (int i = 0; i < pathLength; i++){
-					System.out.println("u : " + u + "    path[u] : " + path[u]);
+					//System.out.println("u : " + u + "    path[u] : " + path[u]);
 					capacity = acyclicSubgraph.getCapacity()[path[u]][u];
 					u = path[u];
 					if (capacity < minCapacityPath){
 						minCapacityPath = capacity;
 					}
 				}
-				System.out.println("flux :" + minCapacityPath);
+				//System.out.println("flux :" + minCapacityPath);
 				totalFlow += minCapacityPath;
 				
-				// on met Ã  jour les graphes
+				// on met à jour les graphes
 				u = target;
 				for (int i = 0; i < pathLength; i++){
 					residualGraph.getCapacity()[path[u]][u] -= minCapacityPath;
@@ -89,11 +89,11 @@ public class Dinic {
 			}
 
 		}
-		System.out.println("flux total :" + totalFlow);
+		System.out.println("flow Max Dinic : " + totalFlow);
 		return totalFlow;
 	}
 
-	// graphe de niveau (= graphe de dÃ©part sans les arcs qui crÃ©ent des chemins plus longs que ceux existant)
+	// graphe de niveau (= graphe de départ sans les arcs qui créent des chemins plus longs que ceux existant)
 	private Graph getAcyclicSubgraph(Graph graph, int start, int target) {
 		int n = graph.getKnotenPosition().size();
 		int[][] acyclicGraphCapacity = new int[n][n];
@@ -122,7 +122,7 @@ public class Dinic {
 
 		queue.add(start);
 		while (!queue.isEmpty()){
-			System.out.println("file : " + queue.toString());
+			//System.out.println("file : " + queue.toString());
 			u = queue.poll();
 			for (int v : graph.getAdjacent(u)){ 
 				if (d[v] >= d[u] + 1){
@@ -152,11 +152,11 @@ public class Dinic {
 				} else {
 					// on enleve l'arc
 					acyclicGraph.getCapacity()[u][v] = 0;
-					System.out.println("arc "+u+","+v+" enlevÃ©");
+					//System.out.println("arc "+u+","+v+" enlevé");
 				}
 			}
 		}
-		System.out.println("fin getAcyclicSubgraph");
+		//System.out.println("fin getAcyclicSubgraph");
 		return acyclicGraph;
 	}
 	
@@ -200,12 +200,12 @@ public class Dinic {
 
 		if (exist){
 			u = target;
-			System.out.print("path : " + target + " , ");
+			//System.out.print("path : " + target + " , ");
 			while (u!=start){
-				System.out.print( path[u] + " , ");
+				//System.out.print( path[u] + " , ");
 				u = path[u];
 			}
-			System.out.println("");
+			//System.out.println("");
 			return path;			
 		}else {
 			return null;
