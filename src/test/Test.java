@@ -72,7 +72,8 @@ public class Test {
 			//int[][] capacity = {{0 , 5 , 3 , 0 , 0 , 0},{0 , 0 , 0 , 4 , 0 , 0},{0 , 0 , 0 , 0 , 4 , 0},{0 , 0 , 0 , 0 , 0 , 6},{0 , 0 , 0 , 0 , 0 , 3},{0 , 0 , 0 , 0 , 0 , 0}};
 
 			// graphe exemple wikipedia : http://en.wikipedia.org/wiki/Push–relabel_maximum_flow_algorithm
-			int[][] capacity = {{0 , 15 , 0 , 4 , 0 , 0},{0 , 0 , 12 , 0 , 0 , 0},{0 , 0 , 0 , 3 , 0 , 7},{0 , 0 , 0 , 0 , 10, 0},{0 , 5 , 0 , 0 , 0 , 10},{0 , 0 , 0 , 0 , 0 , 0}};
+			//int[][] capacity = {{0 , 15 , 0 , 4 , 0 , 0},{0 , 0 , 12 , 0 , 0 , 0},{0 , 0 , 0 , 3 , 0 , 7},{0 , 0 , 0 , 0 , 10, 0},{0 , 5 , 0 , 0 , 0 , 10},{0 , 0 , 0 , 0 , 0 , 0}};
+			int[][] capacity = {{0 , 15 , 0 , 0 , 0 , 0},{0 , 0 , 8 , 0 , 4 , 0},{0 , 4 , 0 , 3 , 0 , 3},{4 , 0 , 0 , 0 , 6, 0},{0 , 1 , 0 , 4 , 0 , 10},{0 , 0 , 4 , 0 , 0 , 0}};
 
 			
 			Graph graph = new Graph(pos, capacity);	
@@ -84,7 +85,7 @@ public class Test {
 			frame.setVisible(true);*/
 			
 			int instanzen = 1;
-			int knotenzahl = 8;
+			int knotenzahl = 6;
 			int maxKapazitat = 10;
 			int start = 0;
 			int target = 5;
