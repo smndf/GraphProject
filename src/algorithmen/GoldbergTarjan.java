@@ -18,14 +18,14 @@ public class GoldbergTarjan {
 		int maxFlow = 0;
 		ArrayList<Integer> set = new ArrayList<Integer>();
 
-		// Le préflot initial est comme étant nul sur tous les arcs sauf ceux sortant de la source, et f(s,v)=c(s,v) pour tout arc (s,v). 
+		// Le prï¿½flot initial est comme ï¿½tant nul sur tous les arcs sauf ceux sortant de la source, et f(s,v)=c(s,v) pour tout arc (s,v). 
 		int[][] flow = new int[n][n];
 		for (int i=0; i<n; i++){
 			for (int j=0; j<n; j++){
 				flow[i][j] = 0;
 			}	
 		}
-		
+
 		for (int v : graph.getAdjacent(start)){
 			flow[start][v] = graph.getCapacity()[start][v];
 			flow[v][start] = -flow[start][v];
@@ -34,14 +34,14 @@ public class GoldbergTarjan {
 		//System.out.println(set);
 		//printFlow(flow);
 		//graph.printGraph();
-		//la hauteur de tout sommet autre que la racine est définie comme étant nulle, et pour la racine s, on définit h(s)=|V|.
+		//la hauteur de tout sommet autre que la racine est dï¿½finie comme ï¿½tant nulle, et pour la racine s, on dï¿½finit h(s)=|V|.
 		int[] heights = new int[n];
 		int[] flowExcesses = new int[n];
 
 		for (int i=0; i<n; i++){
 			heights[i] = 0;
 			flowExcesses[i] = flow[start][i];
-			System.out.println("flowExcesses[" + i + "] = " + flowExcesses[i]);
+			//System.out.println("flowExcesses[" + i + "] = " + flowExcesses[i]);
 		}
 		heights[0] = n;
 
@@ -60,34 +60,34 @@ public class GoldbergTarjan {
 		//for(int i=0; i<flowExcesses.length; i++){
 		//	System.out.print(flowExcesses[i] + "   ");			
 		//}
-		//System.out.println("Itérations :");
-		
+		//System.out.println("Itï¿½rations :");
+
 		int u;
 		while ((u = activeVertice2(gtGraph, flow, set)) != -1){
-			System.out.println("Nouveau sommet actif : "+ u);
-						
+			//System.out.println("Nouveau sommet actif : "+ u);
+
 			for (int v = 0; v < n; v++) {
 				if (gtGraph.residualCapacity(flow, u, v) > 0 && heights[u] == heights[v] + 1){
-					//System.out.println("push de : " + u + " à " + v);
-					push2(graph, flow, u, v, start, flowExcesses, set);
-					//System.out.println("Graph après push : " );
+					//System.out.println("push de : " + u + " ï¿½ " + v);
+					push2(graph, flow, u, v, start, target, flowExcesses, set);
+					//System.out.println("Graph aprï¿½s push : " );
 					//graph.printGraph();
 					if (!set.contains(u)){
 						break;
 					}
 					//break; //??
 				} else if (heights[u] <= heights[v]){
-					System.out.println("relabel de : " + u);
+					//System.out.println("relabel de : " + u);
 					relabel(graph, flow, u, heights);
-					//System.out.println("Graph après relabel : " );
+					//System.out.println("Graph aprï¿½s relabel : " );
 					//graph.printGraph();
 					//printHeights(heights);
 				}
 			} 
 		}
 
-		printFlow(flow);
-		
+		//printFlow(flow);
+
 		for (int i = 0; i < n; i++) {
 			maxFlow += flow[i][target];
 		}
@@ -102,19 +102,19 @@ public class GoldbergTarjan {
 		int m;
 		if (flowExcesses[u] > graph.residualCapacity(flow, u, v)) m = graph.residualCapacity(flow, u, v);
 		else m = flowExcesses[u];
-		System.out.println("push de " + u + " à " + v +" de " + m);
+		//System.out.println("push de " + u + " ï¿½ " + v +" de " + m);
 		flowExcesses[u] -= m;
 		flowExcesses[v] += m;
 		flow[u][v] += m;
 		flow[v][u] -= m;
 		//printFlow(flow);
-		System.out.println("flowExcesses["+u+"] : " + flowExcesses[u]);
-		System.out.println("flowExcesses["+v+"] : " + flowExcesses[v]);
+		//System.out.println("flowExcesses["+u+"] : " + flowExcesses[u]);
+		//System.out.println("flowExcesses["+v+"] : " + flowExcesses[v]);
 	}
 
-	public void push2(Graph graph, int[][] flow, int u, int v, int start, int[] flowExcesses, ArrayList<Integer> set){
+	public void push2(Graph graph, int[][] flow, int u, int v, int start, int target, int[] flowExcesses, ArrayList<Integer> set){
 		int m;
-		if (v!=start && flowExcesses[v]==0 && !set.contains(v)){
+		if (v!=target && v!=start && flowExcesses[v]==0 && !set.contains(v)){
 			set.add(v);
 			//System.out.println("add : " + v);
 		}
@@ -128,7 +128,7 @@ public class GoldbergTarjan {
 		//System.out.println(graph.residualCapacity(flow, u, v));
 		if (flowExcesses[u] > graph.residualCapacity(flow, u, v)) m = graph.residualCapacity(flow, u, v);
 		else m = flowExcesses[u];
-		System.out.println("push de " + u + " à " + v +" de " + m);
+		//System.out.println("push de " + u + " ï¿½ " + v +" de " + m);
 		flowExcesses[u] -= m;
 		flowExcesses[v] += m;
 		flow[u][v] += m;
@@ -140,13 +140,13 @@ public class GoldbergTarjan {
 		//for (int i = 0 ; i< flowExcesses.length; i++){
 		//	System.out.println("flowExcesses["+i+"] = "+ flowExcesses[i]);
 		//}
-		System.out.println("flowExcesses["+u+"] =" + flowExcesses[u]);
-		System.out.println("flowExcesses["+v+"] =" + flowExcesses[v]);
+		//System.out.println("flowExcesses["+u+"] =" + flowExcesses[u]);
+		//System.out.println("flowExcesses["+v+"] =" + flowExcesses[v]);
 		//System.out.println("capacity["+u+"]["+v+"] =" + (graph.getCapacity()[u][v]));
-		System.out.println(("flow["+u+"]["+v+"] =" +flow[u][v]));
+		//System.out.println(("flow["+u+"]["+v+"] =" +flow[u][v]));
 		//System.out.println("residualCapacity["+u+"]["+v+"] =" + graph.residualCapacity(flow, u, v));
 		//System.out.println("capacity["+v+"]["+u+"] =" + (graph.getCapacity()[v][u]));
-		System.out.println(("flow["+v+"]["+u+"] =" +flow[v][u]));
+		//System.out.println(("flow["+v+"]["+u+"] =" +flow[v][u]));
 		//printFlow(flow);
 	}
 
@@ -155,7 +155,7 @@ public class GoldbergTarjan {
 
 		//graph.printGraph();
 		//printFlow(flow);
-		System.out.println(graph.getAdjacent(flow, u));
+		//System.out.println("adjacents to " +u + " : " + graph.getAdjacent(flow, u));
 		for (int v : graph.getAdjacent(flow, u)){ 
 			if (graph.residualCapacity(flow, u, v)>0){
 				if (heights[v]<minHeight) {
@@ -165,11 +165,11 @@ public class GoldbergTarjan {
 			}
 		}
 		if (heights[u]>minHeight) {
-			//System.out.print("nouvelle hauteur plus grande que la précédente !");
+			//System.out.print("nouvelle hauteur plus grande que la prï¿½cï¿½dente !");
 		} else {
 			heights[u] = minHeight + 1;			
 		}
-		System.out.println("heights["+u+"] =" + heights[u]);
+		//System.out.println("heights["+u+"] =" + heights[u]);
 	}
 
 	public int flowExcess(Graph graph, int[][] flow, int u){
@@ -182,7 +182,7 @@ public class GoldbergTarjan {
 
 	public int activeVertice2(Graph graph, int[][] flow, ArrayList<Integer> set){
 		int n = set.size();
-		System.out.println("active vertix de : " + set);
+		//System.out.println("set active vertix : " + set);
 		for (int i = 0; i < n; i++){
 			//System.out.println("flowExcess("+i+") = "+flowExcess(graph, flow, set.get(i)));
 			if (flowExcess(graph, flow, set.get(i)) > 0) {
@@ -191,7 +191,7 @@ public class GoldbergTarjan {
 		}
 		return -1;
 	}
-	
+
 	public int activeVertice(Graph graph, int[][] flow){
 		int n = graph.getCapacity().length;
 		for (int i = 1; i < n-1; i++){
@@ -200,22 +200,22 @@ public class GoldbergTarjan {
 		}
 		return -1;
 	}
-	
+
 	public void printFlow(int[][] flow){
 		for (int i=0; i < flow[0].length; i++){
-			//System.out.print("{ ");
+			System.out.print("{ ");
 			for (int j=0; j < flow[0].length; j++){
 				System.out.print(flow[i][j] + "  ");
 			}
 			System.out.print("}\n");
 		}
 	}
-	
+
 	public void printHeights(int[] heights){
 		System.out.println("heights : ");
 		for (int i=0; i < heights.length; i++){
 			System.out.print("{ ");
-				System.out.print(heights[i] + "  ");
+			System.out.print(heights[i] + "  ");
 			System.out.print("}\n");
 		}
 	}
