@@ -80,6 +80,18 @@ public class EdmondsKarp {
 				residualGraphCapacity[v][u] -= flow[v][u];
 				v = u;
 			}
+
+			Graph residualGraphDraw = new Graph();
+			int[][] residualGraphCapacityDraw = new int[n][n];
+			for (int i = 0; i < n; i++) {
+				for (int j = 0; j < n; j++) {
+					residualGraphCapacityDraw[i][j] = residualGraph.getCapacity()[i][j];
+				}
+			}
+			residualGraphDraw.setCapacity(residualGraphCapacityDraw);
+			residualGraphDraw.setKnotenPosition(graph.getKnotenPosition());
+			residualGraphDraw.drawGraph("Graph Visualisierung EdmondsKarp");
+			
 			pathList.add(path);
 			//drawGraph(residualGraph, path);
 
@@ -90,7 +102,6 @@ public class EdmondsKarp {
 			path = BFS(residualGraphCapacity, start, target);
 		}
 		System.out.println("flow Max Edmonds-Karp: " + floxMax);
-		residualGraph.drawGraph("Graph Visualisierung Edmonds-Karp");
 		return floxMax;
 	}
 

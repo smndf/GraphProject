@@ -84,7 +84,7 @@ public class Test {
 			frame.setSize(1000,600);
 			frame.setVisible(true);*/
 			
-			int instanzen = 10;
+			int instanzen = 1;
 			int knotenzahl = 6;
 			int maxKapazitat = 10;
 			int start = 0;
@@ -98,21 +98,21 @@ public class Test {
 				//graph.printGraph();
 				//graph.drawGraph("Visualiesierung Graph");
 				
-				FordFulkerson ff = new FordFulkerson();
+		/*		FordFulkerson ff = new FordFulkerson();
 				int flowFF = ff.fordFulkerson(graph, start, target);
-							
+					
 				EdmondsKarp ek = new EdmondsKarp(graph);
 				int flowEK = ek.edmondsKarp(start, target);
-				
+				*/
 				Dinic di = new Dinic();
 				int flowDI = di.dinic(graph, start, target);
 				
-				GoldbergTarjan gt = new GoldbergTarjan();
+/*				GoldbergTarjan gt = new GoldbergTarjan();
 				int flowGT = gt.goldbergTarjan(graph, start, target);
-				
+			
 				if (flowFF != flowEK || flowEK != flowDI || flowDI != flowGT){
 					error ++;
-				}
+				}*/
 			}
 			
 			System.out.println(error + " error(s) on the " + instanzen + " instances");

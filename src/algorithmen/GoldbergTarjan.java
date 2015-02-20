@@ -126,6 +126,19 @@ public class GoldbergTarjan {
 		//}
 		//System.out.println(flowExcesses[u]);
 		//System.out.println(graph.residualCapacity(flow, u, v));
+
+		int n = graph.getKnotenPosition().size();
+		Graph residualGraphDraw = new Graph();
+		int[][] residualGraphCapacityDraw = new int[n][n];
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				residualGraphCapacityDraw[i][j] = graph.residualCapacity(flow, u, v);
+			}
+		}
+		residualGraphDraw.setCapacity(residualGraphCapacityDraw);
+		residualGraphDraw.setKnotenPosition(graph.getKnotenPosition());
+		residualGraphDraw.drawGraph("Graph Visualisierung Goldberg Tarjan");
+		
 		if (flowExcesses[u] > graph.residualCapacity(flow, u, v)) m = graph.residualCapacity(flow, u, v);
 		else m = flowExcesses[u];
 		//System.out.println("push de " + u + " � " + v +" de " + m);
@@ -137,6 +150,7 @@ public class GoldbergTarjan {
 			//System.out.println("remove : " + set.get(set.indexOf(u)) + " - u : " + u);
 			set.remove(set.indexOf(u));
 		}
+
 		//for (int i = 0 ; i< flowExcesses.length; i++){
 		//	System.out.println("flowExcesses["+i+"] = "+ flowExcesses[i]);
 		//}

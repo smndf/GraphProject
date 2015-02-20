@@ -69,12 +69,23 @@ public class FordFulkerson {
 				}	
 			}
 
+			
+			Graph residualGraphDraw = new Graph();
+			int[][] residualGraphCapacityDraw = new int[n][n];
+			for (int i = 0; i < n; i++) {
+				for (int j = 0; j < n; j++) {
+					residualGraphCapacityDraw[i][j] = residualGraph.getCapacity()[i][j];
+				}
+			}
+			residualGraphDraw.setCapacity(residualGraphCapacityDraw);
+			residualGraphDraw.setKnotenPosition(graph.getKnotenPosition());
+			residualGraphDraw.drawGraph("Graph Visualisierung Ford-Fulkerson");
+			
 			pathList.add(path);
 
 			path = residualGraph.DFS(start, target);
 		}
 		System.out.println("flow Max Ford-Fulkerson : " + flowMax);
-		residualGraph.drawGraph("Graph Visualisierung Ford-Fulkerson");
 		return flowMax;
 	}
 

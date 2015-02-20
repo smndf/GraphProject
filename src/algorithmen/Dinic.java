@@ -85,6 +85,16 @@ public class Dinic {
 					u = path[u];
 				}
 
+				Graph residualGraphDraw = new Graph();
+				int[][] residualGraphCapacityDraw = new int[n][n];
+				for (int i = 0; i < n; i++) {
+					for (int j = 0; j < n; j++) {
+						residualGraphCapacityDraw[i][j] = residualGraph.getCapacity()[i][j];
+					}
+				}
+				residualGraphDraw.setCapacity(residualGraphCapacityDraw);
+				residualGraphDraw.setKnotenPosition(graph.getKnotenPosition());
+				residualGraphDraw.drawGraph("Graph Visualisierung Dinic");
 
 			}
 
