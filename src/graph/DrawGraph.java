@@ -11,15 +11,24 @@ public class DrawGraph  extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private Graph graph;
 	private ArrayList<Integer> pathGraph;
+	private int[] flowExcess;
 
 	public DrawGraph(Graph residualGraph, ArrayList<Integer> path) {
 		graph = residualGraph;
 		pathGraph = path;
+		flowExcess = null;
 	}
 
 	public DrawGraph(Graph residualGraph) {
 		graph = residualGraph;
 		pathGraph = null;
+		flowExcess = null;
+	}
+
+	public DrawGraph(Graph residualGraph, int[] flowExcesses) {
+		graph = residualGraph;
+		pathGraph = null;
+		flowExcess = flowExcesses;
 	}
 
 	protected void paintComponent(Graphics g){
@@ -33,6 +42,11 @@ public class DrawGraph  extends JPanel {
 		int count = 0;
 		for (Position p : positions){
 			g.drawString(Integer.toString(count), p.getX()-5 ,p.getY()-5);
+			if (flowExcess != null){
+				g.setColor(Color.RED);
+				g.drawString(Integer.toString(flowExcess[count]), p.getX()+5 ,p.getY()+5);
+				g.setColor(Color.BLACK);				
+			}
 			g.fillOval(p.getX()-4, p.getY()-4, 7, 7);
 			count++;
 		}

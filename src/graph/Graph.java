@@ -206,4 +206,12 @@ public class Graph {
 		}		
 	}
 
+	public void drawGraph(String name, int[] flowExcesses) {
+		JFrame frame = new JFrame(name);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.getContentPane().add(new DrawGraph(this, flowExcesses));
+		frame.setSize(1000,600);
+		frame.setVisible(true);
+	}
+
 }

@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 public class GoldbergTarjan {
 
+	private int[][] flow;
+	private int[] flowExcesses;
 
 	public GoldbergTarjan(){
 	}
@@ -19,7 +21,7 @@ public class GoldbergTarjan {
 		ArrayList<Integer> set = new ArrayList<Integer>();
 
 		// Le pr�flot initial est comme �tant nul sur tous les arcs sauf ceux sortant de la source, et f(s,v)=c(s,v) pour tout arc (s,v). 
-		int[][] flow = new int[n][n];
+		flow = new int[n][n];
 		for (int i=0; i<n; i++){
 			for (int j=0; j<n; j++){
 				flow[i][j] = 0;
@@ -36,7 +38,7 @@ public class GoldbergTarjan {
 		//graph.printGraph();
 		//la hauteur de tout sommet autre que la racine est d�finie comme �tant nulle, et pour la racine s, on d�finit h(s)=|V|.
 		int[] heights = new int[n];
-		int[] flowExcesses = new int[n];
+		flowExcesses = new int[n];
 
 		for (int i=0; i<n; i++){
 			heights[i] = 0;
@@ -69,7 +71,21 @@ public class GoldbergTarjan {
 			for (int v = 0; v < n; v++) {
 				if (gtGraph.residualCapacity(flow, u, v) > 0 && heights[u] == heights[v] + 1){
 					//System.out.println("push de : " + u + " � " + v);
-					push2(graph, flow, u, v, start, target, flowExcesses, set);
+					push2(graph, u, v, start, target, set);
+					
+					Graph residualGraphDraw = new Graph();
+					int[][] residualGraphCapacityDraw = new int[n][n];
+					int[] newFlowExcess = new int[n];
+					for (int i = 0; i < n; i++) {
+						newFlowExcess[i] = flowExcesses[i];
+						for (int j = 0; j < n; j++) {
+							residualGraphCapacityDraw[i][j] = graph.getCapacity()[i][j] - flow[i][j];
+						}
+					}
+					residualGraphDraw.setCapacity(residualGraphCapacityDraw);
+					residualGraphDraw.setKnotenPosition(graph.getKnotenPosition());
+					residualGraphDraw.drawGraph("Graph Visualisierung Goldberg Tarjan", newFlowExcess);
+					
 					//System.out.println("Graph apr�s push : " );
 					//graph.printGraph();
 					if (!set.contains(u)){
@@ -78,7 +94,7 @@ public class GoldbergTarjan {
 					//break; //??
 				} else if (heights[u] <= heights[v]){
 					//System.out.println("relabel de : " + u);
-					relabel(graph, flow, u, heights);
+					relabel(graph, u, heights);
 					//System.out.println("Graph apr�s relabel : " );
 					//graph.printGraph();
 					//printHeights(heights);
@@ -112,7 +128,7 @@ public class GoldbergTarjan {
 		//System.out.println("flowExcesses["+v+"] : " + flowExcesses[v]);
 	}
 
-	public void push2(Graph graph, int[][] flow, int u, int v, int start, int target, int[] flowExcesses, ArrayList<Integer> set){
+	public void push2(Graph graph, int u, int v, int start, int target, ArrayList<Integer> set){
 		int m;
 		if (v!=target && v!=start && flowExcesses[v]==0 && !set.contains(v)){
 			set.add(v);
@@ -126,18 +142,6 @@ public class GoldbergTarjan {
 		//}
 		//System.out.println(flowExcesses[u]);
 		//System.out.println(graph.residualCapacity(flow, u, v));
-
-		int n = graph.getKnotenPosition().size();
-		Graph residualGraphDraw = new Graph();
-		int[][] residualGraphCapacityDraw = new int[n][n];
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < n; j++) {
-				residualGraphCapacityDraw[i][j] = graph.residualCapacity(flow, u, v);
-			}
-		}
-		residualGraphDraw.setCapacity(residualGraphCapacityDraw);
-		residualGraphDraw.setKnotenPosition(graph.getKnotenPosition());
-		residualGraphDraw.drawGraph("Graph Visualisierung Goldberg Tarjan");
 		
 		if (flowExcesses[u] > graph.residualCapacity(flow, u, v)) m = graph.residualCapacity(flow, u, v);
 		else m = flowExcesses[u];
@@ -164,7 +168,7 @@ public class GoldbergTarjan {
 		//printFlow(flow);
 	}
 
-	public void relabel(Graph graph, int[][] flow, int u, int[] heights){
+	public void relabel(Graph graph, int u, int[] heights){
 		int minHeight = Integer.MAX_VALUE;
 
 		//graph.printGraph();
