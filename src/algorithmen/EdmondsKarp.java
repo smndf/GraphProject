@@ -27,6 +27,7 @@ public class EdmondsKarp {
 	}
 
 	public int edmondsKarp(int start, int target) {
+		int num = 1;
 		int n = graph.getKnotenPosition().size();
 		int[][] flow = new int[n][n];
 		int floxMax = 0;
@@ -90,7 +91,7 @@ public class EdmondsKarp {
 			}
 			residualGraphDraw.setCapacity(residualGraphCapacityDraw);
 			residualGraphDraw.setKnotenPosition(graph.getKnotenPosition());
-			residualGraphDraw.drawGraph("Graph Visualisierung EdmondsKarp");
+			residualGraphDraw.drawGraph("Graph Visualisierung EdmondsKarp " +num++);
 			
 			pathList.add(path);
 			//drawGraph(residualGraph, path);

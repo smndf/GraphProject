@@ -28,11 +28,13 @@ public class GoldbergTarjan {
 			}	
 		}
 
+		// INITIAL SATURATING PUSH
 		for (int v : graph.getAdjacent(start)){
 			flow[start][v] = graph.getCapacity()[start][v];
 			flow[v][start] = -flow[start][v];
 			set.add(v);
 		}
+		
 		//System.out.println(set);
 		//printFlow(flow);
 		//graph.printGraph();
@@ -63,7 +65,7 @@ public class GoldbergTarjan {
 		//	System.out.print(flowExcesses[i] + "   ");			
 		//}
 		//System.out.println("It�rations :");
-
+		int num = 1;
 		int u;
 		while ((u = activeVertice2(gtGraph, flow, set)) != -1){
 			//System.out.println("Nouveau sommet actif : "+ u);
@@ -84,7 +86,7 @@ public class GoldbergTarjan {
 					}
 					residualGraphDraw.setCapacity(residualGraphCapacityDraw);
 					residualGraphDraw.setKnotenPosition(graph.getKnotenPosition());
-					residualGraphDraw.drawGraph("Graph Visualisierung Goldberg Tarjan", newFlowExcess);
+					residualGraphDraw.drawGraph("Graph Visualisierung Goldberg Tarjan " + num++, newFlowExcess);
 					
 					//System.out.println("Graph apr�s push : " );
 					//graph.printGraph();
@@ -106,6 +108,7 @@ public class GoldbergTarjan {
 
 		for (int i = 0; i < n; i++) {
 			maxFlow += flow[i][target];
+			System.out.println("Flow "+i +" : " + flow[i][target]);
 		}
 
 		System.out.println("Flow Max Goldberg-Tarjan : "+maxFlow);

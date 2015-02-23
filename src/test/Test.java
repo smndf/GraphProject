@@ -113,6 +113,9 @@ public class Test {
 				if (flowFF != flowEK || flowEK != flowDI || flowDI != flowGT){
 					error ++;
 				}
+					graph.printGraph();
+					graph.drawGraph("Visualiesierung Graph");
+				
 			}
 			
 			System.out.println(error + " error(s) on the " + instanzen + " instances");

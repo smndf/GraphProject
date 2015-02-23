@@ -19,6 +19,7 @@ public class Dinic {
 	}
 
 	public int dinic(Graph graph, int start, int target){
+		int num = 1;
 		int n = graph.getKnotenPosition().size();
 		int[][] flow = new int[n][n];
 		int totalFlow = 0;
@@ -75,7 +76,7 @@ public class Dinic {
 				//System.out.println("flux :" + minCapacityPath);
 				totalFlow += minCapacityPath;
 				
-				// on met à jour les graphes
+				// on met ï¿½ jour les graphes
 				u = target;
 				for (int i = 0; i < pathLength; i++){
 					residualGraph.getCapacity()[path[u]][u] -= minCapacityPath;
@@ -94,7 +95,7 @@ public class Dinic {
 				}
 				residualGraphDraw.setCapacity(residualGraphCapacityDraw);
 				residualGraphDraw.setKnotenPosition(graph.getKnotenPosition());
-				residualGraphDraw.drawGraph("Graph Visualisierung Dinic");
+				residualGraphDraw.drawGraph("Graph Visualisierung Dinic " +num++);
 
 			}
 
@@ -103,7 +104,7 @@ public class Dinic {
 		return totalFlow;
 	}
 
-	// graphe de niveau (= graphe de départ sans les arcs qui créent des chemins plus longs que ceux existant)
+	// graphe de niveau (= graphe de dï¿½part sans les arcs qui crï¿½ent des chemins plus longs que ceux existant)
 	private Graph getAcyclicSubgraph(Graph graph, int start, int target) {
 		int n = graph.getKnotenPosition().size();
 		int[][] acyclicGraphCapacity = new int[n][n];
@@ -162,7 +163,7 @@ public class Dinic {
 				} else {
 					// on enleve l'arc
 					acyclicGraph.getCapacity()[u][v] = 0;
-					//System.out.println("arc "+u+","+v+" enlevé");
+					//System.out.println("arc "+u+","+v+" enlevï¿½");
 				}
 			}
 		}
