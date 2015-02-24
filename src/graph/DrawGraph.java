@@ -55,7 +55,7 @@ public class DrawGraph  extends JPanel {
 		for (int i=0; i < capacities.length; i++){
 			System.out.println("{" + capacities[i][0] + " , " + capacities[i][1] + " , " + capacities[i][2] + " , " + capacities[i][3] + " , " + capacities[i][4] + " , " + capacities[i][5] + "}");
 		}*/
-		
+	
 		
 		//// AFFICHAGE ARETES GRAPHE /////
 		g.setColor(Color.black);
@@ -75,10 +75,15 @@ public class DrawGraph  extends JPanel {
 					y1 = positions.get(i).getY();
 					y2 = positions.get(j).getY();
 					g.drawLine(x1, y1 , x2, y2);
+		
 					if (i>j){
 						g.drawString(Integer.toString(flow), Math.min(x1, x2)+Math.abs((x1-x2)/2)+10, Math.min(y1, y2)+Math.abs((y1-y2)/2)+10);												
+						
 					} else {
+						g.setColor(Color.gray);
 						g.drawString(Integer.toString(flow), Math.min(x1, x2)+Math.abs((x1-x2)/2)-10, Math.min(y1, y2)+Math.abs((y1-y2)/2)-10);						
+						g.setColor(Color.black);
+
 					}
 				}
 			}	
